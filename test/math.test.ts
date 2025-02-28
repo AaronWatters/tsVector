@@ -1,7 +1,7 @@
 
 
 import { describe, expect, it } from 'vitest';
-import { add, subtract } from '../src/math';
+import { add, subtract } from '../src/index';
 
 describe('Math Functions', () => {
   it('should add numbers correctly', () => {
