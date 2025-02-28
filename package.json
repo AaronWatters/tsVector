@@ -1,0 +1,22 @@
+{
+  "name": "tsvector",
+  "version": "1.0.0",
+  "description": "Quick and dirty and minimalist vector and matrix operations in Typescript.  KISS.",
+  "main": "index.js",
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest",
+    "dev": "vite"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0",
+    "vitest": "^3.0.7"
+  },
+  "devDependencies": {
+    "vite-plugin-dts": "^4.5.1"
+  }
+}
