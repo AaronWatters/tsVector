@@ -14,3 +14,15 @@ export {
     vNearlyZero,
     vClose,
 } from './vector';
+
+export {
+    Matrix,
+    mZero,
+    affine3d,
+    Mshape,
+    eye,
+    MvProduct,
+    MMProduct,
+    MCopy,
+    MTolerate,
+} from './matrix';
