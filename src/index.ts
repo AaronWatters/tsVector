@@ -1,8 +1,10 @@
 
 export { add, subtract } from './math';
 
+export type { Vector } from './vector';
+
 export { 
-    Vector,
+    //Vector,
     vZero,
     vAdd,
     vMin,
@@ -15,8 +17,10 @@ export {
     vClose,
 } from './vector';
 
+export type { Matrix } from './matrix';
+
 export {
-    Matrix,
+    //Matrix,
     mZero,
     affine3d,
     Mshape,
