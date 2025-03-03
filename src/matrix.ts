@@ -9,7 +9,7 @@ export function mZero(n: number, m: number): Matrix {
 }
 
 /** Make a 3d graphics affine matrix (4x4) from a rotation (3x3) and translation vector */
-export function affine3d(rotation: Matrix, translation: vector.Vector): Matrix {
+export function affine3d(rotation: Matrix, translation: vector.Vector=[0,0,0]): Matrix {
     let result = mZero(4, 4);
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
@@ -83,3 +83,57 @@ export function MTolerate(M: Matrix, epsilon = 0.001): Matrix {
     return M.map(row => row.map(x => Math.abs(x - Math.round(x)) < epsilon ? Math.round(x) : x));
 }
 
+/** Apply an affine 4x4 transform matrix for 3d space to a 3d vector */
+export function applyAffine3d(M: Matrix, v: vector.Vector): vector.Vector {
+    return MvProduct(M, v.concat(1)).slice(0, 3);
+};
+
+/** Flatten a matrix into a list. */
+export function MAsList(M: Matrix): vector.Vector {
+    return M.reduce((acc, row) => acc.concat(row), []);
+};
+
+/** unflatten a list into a matrix */
+export function listAsM(M: vector.Vector, rows: number, cols: number): Matrix {
+    if (M.length !== rows * cols) {
+        throw new Error(`List length ${M.length} does not match ${rows}x${cols} matrix`);
+    }
+    let result = mZero(rows, cols);
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            result[i][j] = M[i*cols + j];
+        }
+    }
+    return result;
+}
+
+/** Swap row i with row j from M. */
+export function MswapRows(M: Matrix, i: number, j: number, inplace: bool=false): Matrix {
+    let result = M;
+    if (!inplace) {
+        result = MCopy(M);
+    }
+    let temp = result[i];
+    result[i] = result[j];
+    result[j] = temp;
+    return result;
+};
+
+/** Adjoin [M1 | M2] */
+export function MAdjoin(M1: Matrix, M2: Matrix): Matrix {
+    const [rows1, cols1] = Mshape(M1);
+    const [rows2, cols2] = Mshape(M2);
+    if (rows1 !== rows2) {
+        throw new Error(`Matrix M1 has ${rows1} rows, Matrix M2 has ${rows2} rows. Cannot adjoin.`);
+    }
+    let result = mZero(rows1, cols1 + cols2);
+    for (let i = 0; i < rows1; i++) {
+        for (let j = 0; j < cols1; j++) {
+            result[i][j] = M1[i][j];
+        }
+        for (let j = 0; j < cols2; j++) {
+            result[i][cols1 + j] = M2[i][j];
+        }
+    }   
+    return result;
+};

@@ -10,6 +10,11 @@ import {
     MMProduct,
     MCopy,
     MTolerate,
+    applyAffine3d,
+    MAsList,
+    listAsM,
+    MswapRows,
+    MAdjoin,
  } from '../src/index';
 
 describe('Matrix Functions', () => {
@@ -79,5 +84,52 @@ describe('Matrix Functions', () => {
         const A = [[0.000001, -0.9999999]];
         const B = [[0, -1]];
         expect(MTolerate(A)).toStrictEqual(B);
+    });
+
+    it('should apply an affine transformation to a vector', () => {
+        const v = [1,2,3];
+        //const T = null;
+        const R = [
+            [0, 1, 0],
+            [1, 0, 0],
+            [0, 0, 1],
+        ];
+        const A = affine3d(R, [4, 5, 6]);
+        const expected = [2+4,1+5,3+6];
+        const applied = applyAffine3d(A, v);
+        expect(applied).toStrictEqual(expected);
+    });
+
+    it('should flatten a matrix to a list', () => {
+        const A = [[0, 1, 2], [3, 4, 5]];
+        const L = [0, 1, 2, 3, 4, 5];
+        expect(MAsList(A)).toStrictEqual(L);
+    });
+
+    it('should make a matrix from a list', () => {
+        const A = [[0, 1, 2], [3, 4, 5]];
+        const L = [0, 1, 2, 3, 4, 5];
+        expect(listAsM(L, 2, 3)).toStrictEqual(A);
+    });
+
+    it('should swap rows of a matrix', () => {
+        const A = [[6,6,6], [0, 1, 2], [3, 4, 5]];
+        const B = [[6,6,6], [3, 4, 5], [0, 1, 2]];
+        expect(MswapRows(A, 1, 2, false)).toStrictEqual(B);
+    });
+
+    it('should adjoin two matrices', () => {
+        const A = [[0, 1, 2], [3, 4, 5]];
+        const B = [[6, 7], [8, 9]];
+        const C = [[0, 1, 2, 6, 7], [3, 4, 5, 8, 9]];
+        expect(MAdjoin(A, B)).toStrictEqual(C);
+    });
+
+    it('should fail to adjoin incompatible matrices', () => {
+        const A = [[0, 1, 2], [3, 4, 5]];
+        const B = [[6, 7], [8, 9], [10, 11]];
+        const C = [[0, 1, 2, 6, 7], [3, 4, 5, 8, 9]];
+        expect(() => MAdjoin(A, B)).
+            toThrow();
     });
 });

@@ -29,4 +29,9 @@ export {
     MMProduct,
     MCopy,
     MTolerate,
+    applyAffine3d,
+    MAsList,
+    listAsM,
+    MswapRows,
+    MAdjoin,
 } from './matrix';
