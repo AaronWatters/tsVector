@@ -15,6 +15,7 @@ export {
     vNormalize,
     vNearlyZero,
     vClose,
+    vCross,
 } from './vector';
 
 export type { Matrix } from './matrix';
@@ -38,4 +39,6 @@ export {
     MRowEchelon,
     MInverse,
     Mroll,
+    Myaw,
+    Mpitch,
 } from './matrix';

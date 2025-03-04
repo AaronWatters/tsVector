@@ -9,7 +9,10 @@ export function mZero(n: number, m: number): Matrix {
 }
 
 /** Make a 3d graphics affine matrix (4x4) from a rotation (3x3) and translation vector */
-export function affine3d(rotation: Matrix, translation: vector.Vector=[0,0,0]): Matrix {
+export function affine3d(rotation: Matrix | null, translation: vector.Vector=[0,0,0]): Matrix {
+    if (rotation === null) {
+        rotation = eye(3);
+    }
     let result = mZero(4, 4);
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
@@ -204,4 +207,28 @@ export function Mroll(roll: number): Matrix {
         [0, 0, 1],
     ];
     return rollM;
+};
+
+/** aircraft yaw matrix */
+export function Myaw(yaw: number): Matrix {
+    var cy = Math.cos(yaw);
+    var sy = Math.sin(yaw);
+    var yawM = [
+        [1, 0, 0],
+        [0, cy, sy],
+        [0, -sy, cy],
+    ];
+    return yawM;
+};
+
+/** aircraft pitch matrix */
+export function Mpitch(yaw: number): Matrix {
+    var cy = Math.cos(yaw);
+    var sy = Math.sin(yaw);
+    var yawM = [
+        [cy, 0, sy],
+        [0, 1, 0],
+        [-sy, 0, cy],
+    ];
+    return yawM;
 };

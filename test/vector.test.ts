@@ -11,6 +11,7 @@ import {
     vLength,
     vNormalize,
     vClose,
+    vCross,
  } from '../src/index';
 
 describe('Vector Functions', () => {
@@ -48,5 +49,13 @@ describe('Vector Functions', () => {
         let expected = [3/5, 4/5];
         expect(vLength(B)).toBeCloseTo(1);
         expect(vClose(B, expected)).toBe(true);
+    });
+
+    it("should calculate cross products correctly", () => {
+        const v1 = [1,2,3];
+        const v2 = [4,5,6];
+        const v1xv2 = [-3, 6, -3];
+        let C = vCross(v1, v2);
+        expect(C).toStrictEqual(v1xv2);
     });
 });

@@ -64,3 +64,17 @@ export function vNearlyZero(a: Vector, epsilon = 1e-6): boolean {
 export function vClose(a: Vector, b: Vector, epsilon = 1e-6): boolean {
     return vNearlyZero(vSub(a, b), epsilon);
 }
+
+/** 3d vector cross product */
+export function vCross(a: Vector, b: Vector): Vector {
+    
+    // from https://en.wikipedia.org/wiki/Cross_product
+    const [a1, a2, a3] = a;
+    const [b1, b2, b3] = b;
+    const result = [
+        a2 * b3 - a3 * b2,
+        a3 * b1 - a1 * b3,
+        a1 * b2 - a2 * b1
+    ];
+    return result;
+}

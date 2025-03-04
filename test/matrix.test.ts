@@ -19,6 +19,8 @@ import {
     MRowEchelon,
     MInverse,
     Mroll,
+    Myaw,
+    Mpitch,
  } from '../src/index';
 
 describe('Matrix Functions', () => {
@@ -183,5 +185,47 @@ describe('Matrix Functions', () => {
             [0, 0, 1],
         ];
         expect(rM).toStrictEqual(eM);
+    });
+
+    it('should make a yaw matrix', () => {
+        const yM = MTolerate(Myaw(Math.PI/2.0));
+        const eM = [
+            [ 1, 0, 0 ], 
+            [ 0, 0, 1 ], 
+            [ 0, -1, 0 ] 
+        ];
+        expect(yM).toStrictEqual(eM);
+    });
+
+    it('should make a pitch matrix', () => {
+        const pM = MTolerate(Mpitch(Math.PI/2.0));
+        const eM = [
+            [ 0, 0, 1 ], 
+            [ 0, 1, 0 ], 
+            [ -1, 0, 0 ] 
+        ];
+        expect(pM).toStrictEqual(eM);
+    });
+
+    it("should apply a translation matrix", () => {
+        const translation = [1, 2, 3];
+        const M = affine3d(null, translation);
+        const v = [4, 5, 6];
+        const expected = [5, 7, 9];
+        const applied = applyAffine3d(M, v);
+        expect(applied).toStrictEqual(expected);
+    });
+
+    it ("should apply a rotation affine matrix", () => {
+        const rotation = [
+            [0, 1, 0],
+            [1, 0, 0],
+            [0, 0, 1],
+        ];
+        const M = affine3d(rotation);
+        const v = [4, 5, 6];    
+        const expected = [5, 4, 6];
+        const applied = applyAffine3d(M, v);
+        expect(applied).toStrictEqual(expected);
     });
 });
