@@ -34,4 +34,8 @@ export {
     listAsM,
     MswapRows,
     MAdjoin,
+    Mslice,
+    MRowEchelon,
+    MInverse,
+    Mroll,
 } from './matrix';

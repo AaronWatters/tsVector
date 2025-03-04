@@ -15,6 +15,10 @@ import {
     listAsM,
     MswapRows,
     MAdjoin,
+    Mslice,
+    MRowEchelon,
+    MInverse,
+    Mroll,
  } from '../src/index';
 
 describe('Matrix Functions', () => {
@@ -131,5 +135,53 @@ describe('Matrix Functions', () => {
         const C = [[0, 1, 2, 6, 7], [3, 4, 5, 8, 9]];
         expect(() => MAdjoin(A, B)).
             toThrow();
+    });
+
+    it('should slice a matrix', () => {
+        const A = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
+        const B =  [ [ 4 ], [ 7 ] ];
+        expect(Mslice(A, 1, 3, 1, 2)).toStrictEqual(B);
+    });
+
+    it('should row echelon a matrix', () => {
+        const M = [
+            [1,0,1,1,0,0],
+            [0,1,0,0,1,0],
+            [1,2,2,0,0,1],
+        ];
+        const red = [
+            [ 1, 0, 0, 2, 2, -1 ], 
+            [ 0, 1, 0, 0, 1, 0 ], 
+            [ 0, 0, 1, -1, -2, 1 ]
+        ];
+        expect(MRowEchelon(M)).toStrictEqual(red);
+    });
+
+    it('should invert a matrix', () => {
+        const M = [
+            [1,0,1],
+            [0,1,0],
+            [1,2,2],
+        ];
+        const I = [
+            [ 2, 2, -1 ], 
+            [ 0, 1, 0 ], 
+            [ -1, -2, 1 ]
+        ];
+        expect(MInverse(M)).toStrictEqual(I);
+        // verify that M * M^-1 = I
+        expect(MMProduct(M, I)).toStrictEqual(eye(3));
+        // verify that M^-1 * M = I
+        expect(MMProduct(I, M)).toStrictEqual(eye(3));
+    });
+
+    it('should make a 90 degree roll matrix', () => {
+        const rM = MTolerate(Mroll(Math.PI/2.0));
+        const eM = [
+            [0, -1, 0],
+            [1, 0, 0],
+            [0, 0, 1],
+        ];
+        expect(rM).toStrictEqual(eM);
     });
 });

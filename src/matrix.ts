@@ -137,3 +137,71 @@ export function MAdjoin(M1: Matrix, M2: Matrix): Matrix {
     }   
     return result;
 };
+
+/** Return equivalent of numpy M[minrow:maxrow, mincol:maxcol] */
+export function Mslice(M: Matrix, minrow: number, maxrow: number, mincol: number, maxcol: number): Matrix {
+    let result = mZero(maxrow - minrow, maxcol - mincol);
+    for (let i = minrow; i < maxrow; i++) {
+        for (let j = mincol; j < maxcol; j++) {
+            result[i - minrow][j - mincol] = M[i][j];
+        }
+    }
+    return result;
+};
+
+/** Row-eschelon reduction. */
+export function MRowEchelon(M: Matrix): Matrix {
+    let result = MCopy(M);
+    let [rows, cols] = Mshape(result);
+    let lead = 0;
+    for (let r = 0; r < rows; r++) {
+        if (cols <= lead) {
+            return result;
+        }
+        let i = r;
+        while (result[i][lead] === 0) {
+            i++;
+            if (rows === i) {
+                i = r;
+                lead++;
+                if (cols === lead) {
+                    return result;
+                }
+            }
+        }
+        result = MswapRows(result, i, r);
+        let val = result[r][lead];
+        result[r] = result[r].map(x => x / val);
+        for (let i = 0; i < rows; i++) {
+            if (i !== r) {
+                val = result[i][lead];
+                result[i] = vector.vSub(result[i], vector.vScale(val, result[r]));
+            }
+        }
+        lead++;
+    }
+    return result;
+};
+
+/** simple matrix inverse using row eschelon reduction. */
+export function MInverse(M: Matrix): Matrix {
+    let [rows, cols] = Mshape(M);
+    if (rows !== cols) {
+        throw new Error(`Matrix is not square, cannot invert.`);
+    }
+    let result = MAdjoin(M, eye(rows));
+    result = MRowEchelon(result);
+    return Mslice(result, 0, rows, rows, 2*rows);
+};
+
+/** aircraft roll matrix */
+export function Mroll(roll: number): Matrix {
+    var cr = Math.cos(roll);
+    var sr = Math.sin(roll);
+    var rollM = [
+        [cr, -sr, 0],
+        [sr, cr, 0],
+        [0, 0, 1],
+    ];
+    return rollM;
+};
