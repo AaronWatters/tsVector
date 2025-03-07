@@ -111,7 +111,7 @@ export function listAsM(M: vector.Vector, rows: number, cols: number): Matrix {
 }
 
 /** Swap row i with row j from M. */
-export function MswapRows(M: Matrix, i: number, j: number, inplace: bool=false): Matrix {
+export function MswapRows(M: Matrix, i: number, j: number, inplace: boolean=false): Matrix {
     let result = M;
     if (!inplace) {
         result = MCopy(M);
