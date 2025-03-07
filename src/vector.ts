@@ -45,6 +45,11 @@ export function vSub(a: Vector, b: Vector): Vector {
     return vAdd(a, vScale(-1, b));
 }
 
+/** Dot product of two vectors */
+export function vDot(a: Vector, b: Vector): number {
+    return a.reduce((acc, x, i) => acc + x*b[i], 0);
+};
+
 /** Euclidean vector length */
 export function vLength(a: Vector): number {
     return Math.sqrt(a.reduce((acc, x) => acc + x*x, 0));
