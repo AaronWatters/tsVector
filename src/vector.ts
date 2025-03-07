@@ -67,7 +67,6 @@ export function vClose(a: Vector, b: Vector, epsilon = 1e-6): boolean {
 
 /** 3d vector cross product */
 export function vCross(a: Vector, b: Vector): Vector {
-    
     // from https://en.wikipedia.org/wiki/Cross_product
     const [a1, a2, a3] = a;
     const [b1, b2, b3] = b;
