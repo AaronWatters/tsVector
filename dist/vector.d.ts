@@ -17,4 +17,6 @@ export declare function vNormalize(a: Vector): Vector;
 export declare function vNearlyZero(a: Vector, epsilon?: number): boolean;
 /** Test whether two vectors are very close */
 export declare function vClose(a: Vector, b: Vector, epsilon?: number): boolean;
+/** 3d vector cross product */
+export declare function vCross(a: Vector, b: Vector): Vector;
 //# sourceMappingURL=vector.d.ts.map
