@@ -2,7 +2,21 @@
   "name": "tsvector",
   "version": "1.0.0",
   "description": "Quick and dirty and minimalist vector and matrix operations in Typescript.  KISS.",
-  "main": "index.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/tsVector.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/tsVector.js"
+      }
+    }
+  },
+  "main": "dist/tsVector.js",
+  "module": "dist/tsVector.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "vite build",
     "test": "vitest",
