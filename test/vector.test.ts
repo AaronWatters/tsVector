@@ -13,6 +13,8 @@ import {
     vClose,
     vCross,
     vDot,
+    vDiv,
+    vMul,
  } from '../src/index';
 
 describe('Vector Functions', () => {
@@ -67,4 +69,21 @@ describe('Vector Functions', () => {
         let C = vDot(v1, v2);
         expect(C).toBe(v1dotv2);
     });
+
+    it("should pointwise multiply vectors correctly", () => {
+        const v1 = [1,2,3];
+        const v2 = [4,5,6];
+        const v1xv2 = [4,10,18];
+        let C = vMul(v1, v2);
+        expect(C).toStrictEqual(v1xv2);
+    });
+
+    it("should pointwise divide vectors correctly", () => {
+        const v1 = [12,20,30];
+        const v2 = [4,5,6];
+        const v1xv2 = [3,4,5];
+        let C = vDiv(v1, v2);
+        expect(C).toStrictEqual(v1xv2);
+    });
+
 });

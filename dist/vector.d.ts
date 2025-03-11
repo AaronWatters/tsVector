@@ -9,6 +9,10 @@ export declare function vMax(a: Vector, b: Vector): Vector;
 export declare function vScale(a: number, b: Vector): Vector;
 /** Subtract two vectors */
 export declare function vSub(a: Vector, b: Vector): Vector;
+/** pointwise vector multiplication. */
+export declare function vMul(a: Vector, b: Vector): Vector;
+/** pointwise vector division. */
+export declare function vDiv(a: Vector, b: Vector): Vector;
 /** Dot product of two vectors */
 export declare function vDot(a: Vector, b: Vector): number;
 /** Euclidean vector length */

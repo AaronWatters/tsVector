@@ -43,7 +43,25 @@ export function vScale(a: number, b: Vector): Vector {
 /** Subtract two vectors */
 export function vSub(a: Vector, b: Vector): Vector {
     return vAdd(a, vScale(-1, b));
-}
+};
+
+/** pointwise vector multiplication. */
+export function vMul(a: Vector, b: Vector): Vector {
+    let result = vZero(a.length);
+    for (let i = 0; i < a.length; i++) {
+        result[i] = a[i] * b[i];
+    }
+    return result;
+};
+
+/** pointwise vector division. */
+export function vDiv(a: Vector, b: Vector): Vector {
+    let result = vZero(a.length);
+    for (let i = 0; i < a.length; i++) {
+        result[i] = a[i] / b[i];
+    }
+    return result;
+};
 
 /** Dot product of two vectors */
 export function vDot(a: Vector, b: Vector): number {

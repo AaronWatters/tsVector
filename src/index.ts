@@ -17,6 +17,8 @@ export {
     vClose,
     vCross,
     vDot,
+    vDiv,
+    vMul,
 } from './vector';
 
 export type { Matrix } from './matrix';
