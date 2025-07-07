@@ -91,6 +91,14 @@ function c(t, r = !1) {
   }
   return [t.length, t[0].length];
 }
+function S(t) {
+  const [r, n] = c(t);
+  let e = a(n, r);
+  for (let l = 0; l < r; l++)
+    for (let o = 0; o < n; o++)
+      e[o][l] = t[l][o];
+  return e;
+}
 function w(t) {
   let r = a(t, t);
   for (let n = 0; n < t; n++)
@@ -104,7 +112,7 @@ function $(t, r) {
       n[e] += t[e][l] * r[l];
   return n;
 }
-function S(t, r) {
+function T(t, r) {
   const [n, e] = c(t), [l, o] = c(r);
   if (e !== l)
     throw new Error(`Matrix A has ${e} columns, Matrix B has ${l} rows. Cannot multiply.`);
@@ -127,7 +135,7 @@ function z(t, r) {
 function I(t) {
   return t.reduce((r, n) => r.concat(n), []);
 }
-function T(t, r, n) {
+function F(t, r, n) {
   if (t.length !== r * n)
     throw new Error(`List length ${t.length} does not match ${r}x${n} matrix`);
   let e = a(r, n);
@@ -136,13 +144,13 @@ function T(t, r, n) {
       e[l][o] = t[l * n + o];
   return e;
 }
-function m(t, r, n, e = !1) {
+function j(t, r, n, e = !1) {
   let l = t;
   e || (l = d(t));
   let o = l[r];
   return l[r] = l[n], l[n] = o, l;
 }
-function A(t, r) {
+function m(t, r) {
   const [n, e] = c(t), [l, o] = c(r);
   if (n !== l)
     throw new Error(`Matrix M1 has ${n} rows, Matrix M2 has ${l} rows. Cannot adjoin.`);
@@ -155,7 +163,7 @@ function A(t, r) {
   }
   return f;
 }
-function j(t, r, n, e, l) {
+function A(t, r, n, e, l) {
   let o = a(n - r, l - e);
   for (let f = r; f < n; f++)
     for (let i = e; i < l; i++)
@@ -171,7 +179,7 @@ function E(t) {
     for (; r[f][l] === 0; )
       if (f++, n === f && (f = o, l++, e === l))
         return r;
-    r = m(r, f, o);
+    r = j(r, f, o);
     let i = r[o][l];
     r[o] = r[o].map((u) => u / i);
     for (let u = 0; u < n; u++)
@@ -180,14 +188,14 @@ function E(t) {
   }
   return r;
 }
-function F(t) {
+function G(t) {
   let [r, n] = c(t);
   if (r !== n)
     throw new Error("Matrix is not square, cannot invert.");
-  let e = A(t, w(r));
-  return e = E(e), j(e, 0, r, r, 2 * r);
+  let e = m(t, w(r));
+  return e = E(e), A(e, 0, r, r, 2 * r);
 }
-function G(t) {
+function H(t) {
   var r = Math.cos(t), n = Math.sin(t), e = [
     [r, -n, 0],
     [n, r, 0],
@@ -195,7 +203,7 @@ function G(t) {
   ];
   return e;
 }
-function H(t) {
+function J(t) {
   var r = Math.cos(t), n = Math.sin(t), e = [
     [1, 0, 0],
     [0, r, n],
@@ -203,7 +211,7 @@ function H(t) {
   ];
   return e;
 }
-function J(t) {
+function K(t) {
   var r = Math.cos(t), n = Math.sin(t), e = [
     [r, 0, n],
     [0, 1, 0],
@@ -212,25 +220,26 @@ function J(t) {
   return e;
 }
 export {
-  A as MAdjoin,
+  m as MAdjoin,
   I as MAsList,
   d as MCopy,
-  F as MInverse,
-  S as MMProduct,
+  G as MInverse,
+  T as MMProduct,
   E as MRowEchelon,
   k as MTolerate,
-  J as Mpitch,
-  G as Mroll,
+  S as MTranspose,
+  K as Mpitch,
+  H as Mroll,
   c as Mshape,
-  j as Mslice,
-  m as MswapRows,
+  A as Mslice,
+  j as MswapRows,
   $ as MvProduct,
-  H as Myaw,
+  J as Myaw,
   x as add,
   P as affine3d,
   z as applyAffine3d,
   w as eye,
-  T as listAsM,
+  F as listAsM,
   a as mZero,
   C as subtract,
   p as vAdd,

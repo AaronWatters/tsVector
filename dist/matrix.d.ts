@@ -6,6 +6,8 @@ export declare function mZero(n: number, m: number): Matrix;
 export declare function affine3d(rotation: Matrix | null, translation?: vector.Vector): Matrix;
 /** Get the [row, columns] shape of matrix M. */
 export declare function Mshape(M: Matrix, check?: boolean): [number, number];
+/** Transpose a matrix */
+export declare function MTranspose(M: Matrix): Matrix;
 /** Make an n x n identity matrix */
 export declare function eye(n: number): Matrix;
 /** Matrix dot vector product. */
