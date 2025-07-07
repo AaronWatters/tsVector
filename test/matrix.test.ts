@@ -5,6 +5,7 @@ import {
     mZero,
     affine3d,
     Mshape,
+    MTranspose,
     eye,
     MvProduct,
     MMProduct,
@@ -39,6 +40,12 @@ describe('Matrix Functions', () => {
     it('should get the shape of a matrix', () => {
         let M23 = [[0, 0, 0], [0, 0, 0]];
         expect(Mshape(M23)).toStrictEqual([2, 3]);
+    });
+
+    it('should transpose a matrix', () => {
+        let M23 = [[0, 1, 0], [2, 0, 3]];
+        let M32 = [[0, 2], [1, 0], [0, 3]];
+        expect(MTranspose(M23)).toStrictEqual(M32);
     });
 
     it('should get the shape of a matrix with checking', () => {

@@ -36,7 +36,19 @@ export function Mshape(M: Matrix, check=false): [number, number] {
         }
     }
     return [M.length, M[0].length];
-}
+};
+
+/** Transpose a matrix */
+export function MTranspose(M: Matrix): Matrix {
+    const [rows, cols] = Mshape(M);
+    let result = mZero(cols, rows);
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            result[j][i] = M[i][j];
+        }
+    }
+    return result;
+};
 
 /** Make an n x n identity matrix */
 export function eye(n: number): Matrix {

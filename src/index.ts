@@ -28,6 +28,7 @@ export {
     mZero,
     affine3d,
     Mshape,
+    MTranspose,
     eye,
     MvProduct,
     MMProduct,
