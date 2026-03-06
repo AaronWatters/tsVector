@@ -44,3 +44,32 @@ After the run completes, an HTML report is written to the `coverage/` directory.
 Open `coverage/index.html` in your browser to explore the results.
 
 > **Note:** The `coverage/` directory is listed in `.gitignore` and will not be committed to the repository.
+
+## GitHub Actions CI
+
+This repository includes a CI workflow at [`.github/workflows/ci.yml`](.github/workflows/ci.yml) that automatically runs the test suite on every push and pull request.
+
+The workflow has two jobs:
+
+| Job | Tool | Command |
+|-----|------|---------|
+| **Unit Tests** | Vitest | `npm test -- --run` |
+| **End-to-End Tests** | Playwright | `npm run test:e2e` |
+
+The Playwright job also uploads its HTML report as a downloadable **artifact** (retained for 30 days) so you can inspect failures without re-running locally.
+
+### Enabling Actions on your fork
+
+GitHub Actions are enabled by default on the original repository.  If you have
+forked the repository and Actions are not running, follow these steps:
+
+1. Open your fork on GitHub.
+2. Click the **Actions** tab near the top of the page.
+3. If Actions have been disabled, GitHub shows a banner — click **"I understand my workflows, go ahead and enable them"**.
+4. Actions will now run automatically on every push and pull request to your fork.
+
+### Viewing results and artifacts
+
+1. Go to the **Actions** tab of the repository.
+2. Click any workflow run to see individual job logs.
+3. Scroll down to the **Artifacts** section at the bottom of the run summary to download the `playwright-report` produced by the e2e job.
