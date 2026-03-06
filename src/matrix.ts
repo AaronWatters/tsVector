@@ -1,14 +1,29 @@
 
 import * as vector from './vector';
 
+/**
+ * A matrix represented as an array of vectors (rows)
+ */
 export type Matrix = vector.Vector[];
 
-/** Make a zero matrix, n rows, m columns */
+/**
+ * Creates a zero matrix with n rows and m columns
+ * 
+ * @param n - The number of rows
+ * @param m - The number of columns
+ * @returns A new n×m matrix filled with zeros
+ */
 export function mZero(n: number, m: number): Matrix {
     return Array(n).fill(0).map(() => vector.vZero(m));
 }
 
-/** Make a 3d graphics affine matrix (4x4) from a rotation (3x3) and translation vector */
+/**
+ * Creates a 4×4 affine transformation matrix for 3D graphics from a 3×3 rotation matrix and a translation vector
+ * 
+ * @param rotation - A 3×3 rotation matrix, or null to use identity
+ * @param translation - A 3D translation vector (default: [0,0,0])
+ * @returns A 4×4 affine transformation matrix
+ */
 export function affine3d(rotation: Matrix | null, translation: vector.Vector=[0,0,0]): Matrix {
     if (rotation === null) {
         rotation = eye(3);
@@ -24,7 +39,14 @@ export function affine3d(rotation: Matrix | null, translation: vector.Vector=[0,
     return result;
 }
 
-/** Get the [row, columns] shape of matrix M. */
+/**
+ * Gets the shape (dimensions) of a matrix as [rows, columns]
+ * 
+ * @param M - The matrix to measure
+ * @param check - If true, validates that all rows have the same number of columns (default: false)
+ * @returns A tuple containing [number of rows, number of columns]
+ * @throws Error if check is true and rows have inconsistent lengths
+ */
 export function Mshape(M: Matrix, check=false): [number, number] {
     let rows = M.length;
     let cols = M[0].length;
@@ -38,7 +60,12 @@ export function Mshape(M: Matrix, check=false): [number, number] {
     return [M.length, M[0].length];
 };
 
-/** Transpose a matrix */
+/**
+ * Transposes a matrix (swaps rows and columns)
+ * 
+ * @param M - The matrix to transpose
+ * @returns A new matrix where M[i][j] becomes M[j][i]
+ */
 export function MTranspose(M: Matrix): Matrix {
     const [rows, cols] = Mshape(M);
     let result = mZero(cols, rows);
@@ -50,7 +77,12 @@ export function MTranspose(M: Matrix): Matrix {
     return result;
 };
 
-/** Make an n x n identity matrix */
+/**
+ * Creates an n×n identity matrix
+ * 
+ * @param n - The size of the identity matrix
+ * @returns An n×n identity matrix (1s on diagonal, 0s elsewhere)
+ */
 export function eye(n: number): Matrix {
     let result = mZero(n, n);
     for (let i = 0; i < n; i++) {
@@ -59,7 +91,13 @@ export function eye(n: number): Matrix {
     return result;
 }
 
-/** Matrix dot vector product. */
+/**
+ * Computes the matrix-vector product M·v
+ * 
+ * @param M - The matrix
+ * @param v - The vector
+ * @returns A new vector resulting from the matrix-vector multiplication
+ */
 export function MvProduct(M: Matrix, v: vector.Vector): vector.Vector {
     let result = vector.vZero(M.length);
     for (let i = 0; i < M.length; i++) {
@@ -70,7 +108,14 @@ export function MvProduct(M: Matrix, v: vector.Vector): vector.Vector {
     return result;
 }
 
-/** Matrix x Matrix product. */
+/**
+ * Computes the matrix-matrix product A·B
+ * 
+ * @param A - The first matrix
+ * @param B - The second matrix
+ * @returns A new matrix resulting from the matrix multiplication
+ * @throws Error if the number of columns in A doesn't match the number of rows in B
+ */
 export function MMProduct(A: Matrix, B: Matrix): Matrix {
     const [Arows, Acols] = Mshape(A);
     const [Brows, Bcols] = Mshape(B);
@@ -88,27 +133,57 @@ export function MMProduct(A: Matrix, B: Matrix): Matrix {
     return result;
 }
 
-/** Matrix copy */
+/**
+ * Creates a deep copy of a matrix
+ * 
+ * @param M - The matrix to copy
+ * @returns A new matrix with the same values as M
+ */
 export function MCopy(M: Matrix): Matrix {
     return M.map(row => row.slice());
 }
 
-/** round matrix entries near integer values (mainly for testing) */
+/**
+ * Rounds matrix entries near integer values to integers (mainly for testing)
+ * 
+ * @param M - The matrix to process
+ * @param epsilon - The tolerance for rounding (default: 0.001)
+ * @returns A new matrix with near-integer values rounded to integers
+ */
 export function MTolerate(M: Matrix, epsilon = 0.001): Matrix {
     return M.map(row => row.map(x => Math.abs(x - Math.round(x)) < epsilon ? Math.round(x) : x));
 }
 
-/** Apply an affine 4x4 transform matrix for 3d space to a 3d vector */
+/**
+ * Applies a 4×4 affine transformation matrix to a 3D vector
+ * 
+ * @param M - The 4×4 affine transformation matrix
+ * @param v - The 3D vector to transform
+ * @returns A new 3D vector after applying the transformation
+ */
 export function applyAffine3d(M: Matrix, v: vector.Vector): vector.Vector {
     return MvProduct(M, v.concat(1)).slice(0, 3);
 };
 
-/** Flatten a matrix into a list. */
+/**
+ * Flattens a matrix into a one-dimensional vector (row-major order)
+ * 
+ * @param M - The matrix to flatten
+ * @returns A vector containing all matrix elements concatenated row by row
+ */
 export function MAsList(M: Matrix): vector.Vector {
     return M.reduce((acc, row) => acc.concat(row), []);
 };
 
-/** unflatten a list into a matrix */
+/**
+ * Reshapes a one-dimensional vector into a matrix
+ * 
+ * @param M - The vector to reshape
+ * @param rows - The number of rows in the resulting matrix
+ * @param cols - The number of columns in the resulting matrix
+ * @returns A new rows×cols matrix
+ * @throws Error if the vector length doesn't match rows × cols
+ */
 export function listAsM(M: vector.Vector, rows: number, cols: number): Matrix {
     if (M.length !== rows * cols) {
         throw new Error(`List length ${M.length} does not match ${rows}x${cols} matrix`);
@@ -122,7 +197,15 @@ export function listAsM(M: vector.Vector, rows: number, cols: number): Matrix {
     return result;
 }
 
-/** Swap row i with row j from M. */
+/**
+ * Swaps two rows in a matrix
+ * 
+ * @param M - The matrix to modify
+ * @param i - The index of the first row
+ * @param j - The index of the second row
+ * @param inplace - If true, modifies M directly; if false, creates a copy (default: false)
+ * @returns The matrix with rows i and j swapped
+ */
 export function MswapRows(M: Matrix, i: number, j: number, inplace: boolean=false): Matrix {
     let result = M;
     if (!inplace) {
@@ -134,7 +217,14 @@ export function MswapRows(M: Matrix, i: number, j: number, inplace: boolean=fals
     return result;
 };
 
-/** Adjoin [M1 | M2] */
+/**
+ * Adjoins (horizontally concatenates) two matrices side by side
+ * 
+ * @param M1 - The first matrix
+ * @param M2 - The second matrix
+ * @returns A new matrix [M1 | M2] with M1's columns followed by M2's columns
+ * @throws Error if M1 and M2 have different numbers of rows
+ */
 export function MAdjoin(M1: Matrix, M2: Matrix): Matrix {
     const [rows1, cols1] = Mshape(M1);
     const [rows2, cols2] = Mshape(M2);
@@ -153,7 +243,16 @@ export function MAdjoin(M1: Matrix, M2: Matrix): Matrix {
     return result;
 };
 
-/** Return equivalent of numpy M[minrow:maxrow, mincol:maxcol] */
+/**
+ * Extracts a submatrix from a matrix (similar to NumPy slicing)
+ * 
+ * @param M - The source matrix
+ * @param minrow - The starting row index (inclusive)
+ * @param maxrow - The ending row index (exclusive)
+ * @param mincol - The starting column index (inclusive)
+ * @param maxcol - The ending column index (exclusive)
+ * @returns A new matrix containing M[minrow:maxrow, mincol:maxcol]
+ */
 export function Mslice(M: Matrix, minrow: number, maxrow: number, mincol: number, maxcol: number): Matrix {
     let result = mZero(maxrow - minrow, maxcol - mincol);
     for (let i = minrow; i < maxrow; i++) {
@@ -164,7 +263,12 @@ export function Mslice(M: Matrix, minrow: number, maxrow: number, mincol: number
     return result;
 };
 
-/** Row-eschelon reduction. */
+/**
+ * Performs row echelon reduction (Gaussian elimination) on a matrix
+ * 
+ * @param M - The matrix to reduce
+ * @returns A new matrix in row echelon form
+ */
 export function MRowEchelon(M: Matrix): Matrix {
     let result = MCopy(M);
     let [rows, cols] = Mshape(result);
@@ -198,7 +302,13 @@ export function MRowEchelon(M: Matrix): Matrix {
     return result;
 };
 
-/** simple matrix inverse using row eschelon reduction. */
+/**
+ * Computes the inverse of a square matrix using row echelon reduction
+ * 
+ * @param M - The matrix to invert
+ * @returns The inverse matrix M⁻¹
+ * @throws Error if the matrix is not square
+ */
 export function MInverse(M: Matrix): Matrix {
     let [rows, cols] = Mshape(M);
     if (rows !== cols) {
@@ -209,7 +319,12 @@ export function MInverse(M: Matrix): Matrix {
     return Mslice(result, 0, rows, rows, 2*rows);
 };
 
-/** aircraft roll matrix */
+/**
+ * Creates a 3D rotation matrix for aircraft roll (rotation around the z-axis)
+ * 
+ * @param roll - The roll angle in radians
+ * @returns A 3×3 rotation matrix for roll
+ */
 export function Mroll(roll: number): Matrix {
     var cr = Math.cos(roll);
     var sr = Math.sin(roll);
@@ -221,7 +336,12 @@ export function Mroll(roll: number): Matrix {
     return rollM;
 };
 
-/** aircraft yaw matrix */
+/**
+ * Creates a 3D rotation matrix for aircraft yaw (rotation around the x-axis)
+ * 
+ * @param yaw - The yaw angle in radians
+ * @returns A 3×3 rotation matrix for yaw
+ */
 export function Myaw(yaw: number): Matrix {
     var cy = Math.cos(yaw);
     var sy = Math.sin(yaw);
@@ -233,7 +353,12 @@ export function Myaw(yaw: number): Matrix {
     return yawM;
 };
 
-/** aircraft pitch matrix */
+/**
+ * Creates a 3D rotation matrix for aircraft pitch (rotation around the y-axis)
+ * 
+ * @param yaw - The pitch angle in radians
+ * @returns A 3×3 rotation matrix for pitch
+ */
 export function Mpitch(yaw: number): Matrix {
     var cy = Math.cos(yaw);
     var sy = Math.sin(yaw);
