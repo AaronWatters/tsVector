@@ -1,1 +1,259 @@
-"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});function C(t,e){return t+e}function E(t,e){return t-e}function f(t){return Array(t).fill(0)}function p(t,e){let n=f(t.length);for(let r=0;r<t.length;r++)n[r]=t[r]+e[r];return n}function S(t,e){let n=f(t.length);for(let r=0;r<t.length;r++)n[r]=Math.min(t[r],e[r]);return n}function Z(t,e){let n=f(t.length);for(let r=0;r<t.length;r++)n[r]=Math.max(t[r],e[r]);return n}function M(t,e){let n=f(e.length);for(let r=0;r<e.length;r++)n[r]=t*e[r];return n}function v(t,e){return p(t,M(-1,e))}function x(t,e){let n=f(t.length);for(let r=0;r<t.length;r++)n[r]=t[r]*e[r];return n}function L(t,e){let n=f(t.length);for(let r=0;r<t.length;r++)n[r]=t[r]/e[r];return n}function P(t,e){return t.reduce((n,r,l)=>n+r*e[l],0)}function d(t){return Math.sqrt(t.reduce((e,n)=>e+n*n,0))}function R(t){return M(1/d(t),t)}function y(t,e=1e-6){return d(t)<e}function T(t,e,n=1e-6){return y(v(t,e),n)}function D(t,e){const[n,r,l]=t,[o,s,i]=e;return[r*i-l*s,l*o-n*i,n*s-r*o]}function a(t,e){return Array(t).fill(0).map(()=>f(e))}function N(t,e=[0,0,0]){t===null&&(t=g(3));let n=a(4,4);for(let r=0;r<3;r++){for(let l=0;l<3;l++)n[r][l]=t[r][l];n[r][3]=e[r]}return n[3][3]=1,n}function c(t,e=!1){let n=t.length,r=t[0].length;if(e){for(let l=1;l<n;l++)if(t[l].length!==r)throw new Error(`Row ${l} has ${t[l].length} columns, expected ${r}`)}return[t.length,t[0].length]}function q(t){const[e,n]=c(t);let r=a(n,e);for(let l=0;l<e;l++)for(let o=0;o<n;o++)r[o][l]=t[l][o];return r}function g(t){let e=a(t,t);for(let n=0;n<t;n++)e[n][n]=1;return e}function A(t,e){let n=f(t.length);for(let r=0;r<t.length;r++)for(let l=0;l<t[r].length;l++)n[r]+=t[r][l]*e[l];return n}function z(t,e){const[n,r]=c(t),[l,o]=c(e);if(r!==l)throw new Error(`Matrix A has ${r} columns, Matrix B has ${l} rows. Cannot multiply.`);let s=a(n,o);for(let i=0;i<n;i++)for(let u=0;u<o;u++)for(let h=0;h<r;h++)s[i][u]+=t[i][h]*e[h][u];return s}function w(t){return t.map(e=>e.slice())}function B(t,e=.001){return t.map(n=>n.map(r=>Math.abs(r-Math.round(r))<e?Math.round(r):r))}function I(t,e){return A(t,e.concat(1)).slice(0,3)}function k(t){return t.reduce((e,n)=>e.concat(n),[])}function O(t,e,n){if(t.length!==e*n)throw new Error(`List length ${t.length} does not match ${e}x${n} matrix`);let r=a(e,n);for(let l=0;l<e;l++)for(let o=0;o<n;o++)r[l][o]=t[l*n+o];return r}function m(t,e,n,r=!1){let l=t;r||(l=w(t));let o=l[e];return l[e]=l[n],l[n]=o,l}function j(t,e){const[n,r]=c(t),[l,o]=c(e);if(n!==l)throw new Error(`Matrix M1 has ${n} rows, Matrix M2 has ${l} rows. Cannot adjoin.`);let s=a(n,r+o);for(let i=0;i<n;i++){for(let u=0;u<r;u++)s[i][u]=t[i][u];for(let u=0;u<o;u++)s[i][r+u]=e[i][u]}return s}function $(t,e,n,r,l){let o=a(n-e,l-r);for(let s=e;s<n;s++)for(let i=r;i<l;i++)o[s-e][i-r]=t[s][i];return o}function b(t){let e=w(t),[n,r]=c(e),l=0;for(let o=0;o<n;o++){if(r<=l)return e;let s=o;for(;e[s][l]===0;)if(s++,n===s&&(s=o,l++,r===l))return e;e=m(e,s,o);let i=e[o][l];e[o]=e[o].map(u=>u/i);for(let u=0;u<n;u++)u!==o&&(i=e[u][l],e[u]=v(e[u],M(i,e[o])));l++}return e}function F(t){let[e,n]=c(t);if(e!==n)throw new Error("Matrix is not square, cannot invert.");let r=j(t,g(e));return r=b(r),$(r,0,e,e,2*e)}function G(t){var e=Math.cos(t),n=Math.sin(t),r=[[e,-n,0],[n,e,0],[0,0,1]];return r}function H(t){var e=Math.cos(t),n=Math.sin(t),r=[[1,0,0],[0,e,n],[0,-n,e]];return r}function J(t){var e=Math.cos(t),n=Math.sin(t),r=[[e,0,n],[0,1,0],[-n,0,e]];return r}exports.MAdjoin=j;exports.MAsList=k;exports.MCopy=w;exports.MInverse=F;exports.MMProduct=z;exports.MRowEchelon=b;exports.MTolerate=B;exports.MTranspose=q;exports.Mpitch=J;exports.Mroll=G;exports.Mshape=c;exports.Mslice=$;exports.MswapRows=m;exports.MvProduct=A;exports.Myaw=H;exports.add=C;exports.affine3d=N;exports.applyAffine3d=I;exports.eye=g;exports.listAsM=O;exports.mZero=a;exports.subtract=E;exports.vAdd=p;exports.vClose=T;exports.vCross=D;exports.vDiv=L;exports.vDot=P;exports.vLength=d;exports.vMax=Z;exports.vMin=S;exports.vMul=x;exports.vNearlyZero=y;exports.vNormalize=R;exports.vScale=M;exports.vSub=v;exports.vZero=f;
+function x(t, r) {
+  return t + r;
+}
+function C(t, r) {
+  return t - r;
+}
+function s(t) {
+  return Array(t).fill(0);
+}
+function p(t, r) {
+  let n = s(t.length);
+  for (let e = 0; e < t.length; e++)
+    n[e] = t[e] + r[e];
+  return n;
+}
+function b(t, r) {
+  let n = s(t.length);
+  for (let e = 0; e < t.length; e++)
+    n[e] = Math.min(t[e], r[e]);
+  return n;
+}
+function L(t, r) {
+  let n = s(t.length);
+  for (let e = 0; e < t.length; e++)
+    n[e] = Math.max(t[e], r[e]);
+  return n;
+}
+function v(t, r) {
+  let n = s(r.length);
+  for (let e = 0; e < r.length; e++)
+    n[e] = t * r[e];
+  return n;
+}
+function M(t, r) {
+  return p(t, v(-1, r));
+}
+function R(t, r) {
+  let n = s(t.length);
+  for (let e = 0; e < t.length; e++)
+    n[e] = t[e] * r[e];
+  return n;
+}
+function Z(t, r) {
+  let n = s(t.length);
+  for (let e = 0; e < t.length; e++)
+    n[e] = t[e] / r[e];
+  return n;
+}
+function q(t, r) {
+  return t.reduce((n, e, l) => n + e * r[l], 0);
+}
+function g(t) {
+  return Math.sqrt(t.reduce((r, n) => r + n * n, 0));
+}
+function B(t) {
+  return v(1 / g(t), t);
+}
+function y(t, r = 1e-6) {
+  return g(t) < r;
+}
+function D(t, r, n = 1e-6) {
+  return y(M(t, r), n);
+}
+function N(t, r) {
+  const [n, e, l] = t, [o, f, i] = r;
+  return [
+    e * i - l * f,
+    l * o - n * i,
+    n * f - e * o
+  ];
+}
+function a(t, r) {
+  return Array(t).fill(0).map(() => s(r));
+}
+function P(t, r = [0, 0, 0]) {
+  t === null && (t = w(3));
+  let n = a(4, 4);
+  for (let e = 0; e < 3; e++) {
+    for (let l = 0; l < 3; l++)
+      n[e][l] = t[e][l];
+    n[e][3] = r[e];
+  }
+  return n[3][3] = 1, n;
+}
+function c(t, r = !1) {
+  let n = t.length, e = t[0].length;
+  if (r) {
+    for (let l = 1; l < n; l++)
+      if (t[l].length !== e)
+        throw new Error(`Row ${l} has ${t[l].length} columns, expected ${e}`);
+  }
+  return [t.length, t[0].length];
+}
+function S(t) {
+  const [r, n] = c(t);
+  let e = a(n, r);
+  for (let l = 0; l < r; l++)
+    for (let o = 0; o < n; o++)
+      e[o][l] = t[l][o];
+  return e;
+}
+function w(t) {
+  let r = a(t, t);
+  for (let n = 0; n < t; n++)
+    r[n][n] = 1;
+  return r;
+}
+function $(t, r) {
+  let n = s(t.length);
+  for (let e = 0; e < t.length; e++)
+    for (let l = 0; l < t[e].length; l++)
+      n[e] += t[e][l] * r[l];
+  return n;
+}
+function T(t, r) {
+  const [n, e] = c(t), [l, o] = c(r);
+  if (e !== l)
+    throw new Error(`Matrix A has ${e} columns, Matrix B has ${l} rows. Cannot multiply.`);
+  let f = a(n, o);
+  for (let i = 0; i < n; i++)
+    for (let u = 0; u < o; u++)
+      for (let h = 0; h < e; h++)
+        f[i][u] += t[i][h] * r[h][u];
+  return f;
+}
+function d(t) {
+  return t.map((r) => r.slice());
+}
+function k(t, r = 1e-3) {
+  return t.map((n) => n.map((e) => Math.abs(e - Math.round(e)) < r ? Math.round(e) : e));
+}
+function z(t, r) {
+  return $(t, r.concat(1)).slice(0, 3);
+}
+function I(t) {
+  return t.reduce((r, n) => r.concat(n), []);
+}
+function F(t, r, n) {
+  if (t.length !== r * n)
+    throw new Error(`List length ${t.length} does not match ${r}x${n} matrix`);
+  let e = a(r, n);
+  for (let l = 0; l < r; l++)
+    for (let o = 0; o < n; o++)
+      e[l][o] = t[l * n + o];
+  return e;
+}
+function j(t, r, n, e = !1) {
+  let l = t;
+  e || (l = d(t));
+  let o = l[r];
+  return l[r] = l[n], l[n] = o, l;
+}
+function m(t, r) {
+  const [n, e] = c(t), [l, o] = c(r);
+  if (n !== l)
+    throw new Error(`Matrix M1 has ${n} rows, Matrix M2 has ${l} rows. Cannot adjoin.`);
+  let f = a(n, e + o);
+  for (let i = 0; i < n; i++) {
+    for (let u = 0; u < e; u++)
+      f[i][u] = t[i][u];
+    for (let u = 0; u < o; u++)
+      f[i][e + u] = r[i][u];
+  }
+  return f;
+}
+function A(t, r, n, e, l) {
+  let o = a(n - r, l - e);
+  for (let f = r; f < n; f++)
+    for (let i = e; i < l; i++)
+      o[f - r][i - e] = t[f][i];
+  return o;
+}
+function E(t) {
+  let r = d(t), [n, e] = c(r), l = 0;
+  for (let o = 0; o < n; o++) {
+    if (e <= l)
+      return r;
+    let f = o;
+    for (; r[f][l] === 0; )
+      if (f++, n === f && (f = o, l++, e === l))
+        return r;
+    r = j(r, f, o);
+    let i = r[o][l];
+    r[o] = r[o].map((u) => u / i);
+    for (let u = 0; u < n; u++)
+      u !== o && (i = r[u][l], r[u] = M(r[u], v(i, r[o])));
+    l++;
+  }
+  return r;
+}
+function G(t) {
+  let [r, n] = c(t);
+  if (r !== n)
+    throw new Error("Matrix is not square, cannot invert.");
+  let e = m(t, w(r));
+  return e = E(e), A(e, 0, r, r, 2 * r);
+}
+function H(t) {
+  var r = Math.cos(t), n = Math.sin(t), e = [
+    [r, -n, 0],
+    [n, r, 0],
+    [0, 0, 1]
+  ];
+  return e;
+}
+function J(t) {
+  var r = Math.cos(t), n = Math.sin(t), e = [
+    [1, 0, 0],
+    [0, r, n],
+    [0, -n, r]
+  ];
+  return e;
+}
+function K(t) {
+  var r = Math.cos(t), n = Math.sin(t), e = [
+    [r, 0, n],
+    [0, 1, 0],
+    [-n, 0, r]
+  ];
+  return e;
+}
+export {
+  m as MAdjoin,
+  I as MAsList,
+  d as MCopy,
+  G as MInverse,
+  T as MMProduct,
+  E as MRowEchelon,
+  k as MTolerate,
+  S as MTranspose,
+  K as Mpitch,
+  H as Mroll,
+  c as Mshape,
+  A as Mslice,
+  j as MswapRows,
+  $ as MvProduct,
+  J as Myaw,
+  x as add,
+  P as affine3d,
+  z as applyAffine3d,
+  w as eye,
+  F as listAsM,
+  a as mZero,
+  C as subtract,
+  p as vAdd,
+  D as vClose,
+  N as vCross,
+  Z as vDiv,
+  q as vDot,
+  g as vLength,
+  L as vMax,
+  b as vMin,
+  R as vMul,
+  y as vNearlyZero,
+  B as vNormalize,
+  v as vScale,
+  M as vSub,
+  s as vZero
+};

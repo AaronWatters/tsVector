@@ -1,5 +1,6 @@
 {
   "name": "tsvector",
+  "type": "module",
   "version": "1.0.0",
   "description": "Quick and dirty and minimalist vector and matrix operations in Typescript.  KISS.",
   "exports": {
