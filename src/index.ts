@@ -42,6 +42,10 @@ export {
     Mslice,
     MRowEchelon,
     MInverse,
+    yaw,
+    roll,
+    pitch,
+    // Deprecated aliases for backward compatibility
     Mroll,
     Myaw,
     Mpitch,

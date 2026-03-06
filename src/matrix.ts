@@ -320,52 +320,64 @@ export function MInverse(M: Matrix): Matrix {
 };
 
 /**
- * Creates a 3D rotation matrix for aircraft roll (rotation around the z-axis)
+ * Creates a 3D rotation matrix for yaw (rotation around the z-axis)
  * 
- * @param roll - The roll angle in radians
- * @returns A 3×3 rotation matrix for roll
- */
-export function Mroll(roll: number): Matrix {
-    var cr = Math.cos(roll);
-    var sr = Math.sin(roll);
-    var rollM = [
-        [cr, -sr, 0],
-        [sr, cr, 0],
-        [0, 0, 1],
-    ];
-    return rollM;
-};
-
-/**
- * Creates a 3D rotation matrix for aircraft yaw (rotation around the x-axis)
- * 
- * @param yaw - The yaw angle in radians
+ * @param angle - The yaw angle in radians
  * @returns A 3×3 rotation matrix for yaw
  */
-export function Myaw(yaw: number): Matrix {
-    var cy = Math.cos(yaw);
-    var sy = Math.sin(yaw);
-    var yawM = [
-        [1, 0, 0],
-        [0, cy, sy],
-        [0, -sy, cy],
+export function yaw(angle: number): Matrix {
+    var c = Math.cos(angle);
+    var s = Math.sin(angle);
+    return [
+        [c, -s, 0],
+        [s, c, 0],
+        [0, 0, 1],
     ];
-    return yawM;
 };
 
 /**
- * Creates a 3D rotation matrix for aircraft pitch (rotation around the y-axis)
+ * Creates a 3D rotation matrix for roll (rotation around the x-axis)
  * 
- * @param yaw - The pitch angle in radians
+ * @param angle - The roll angle in radians
+ * @returns A 3×3 rotation matrix for roll
+ */
+export function roll(angle: number): Matrix {
+    var c = Math.cos(angle);
+    var s = Math.sin(angle);
+    return [
+        [1, 0, 0],
+        [0, c, s],
+        [0, -s, c],
+    ];
+};
+
+/**
+ * Creates a 3D rotation matrix for pitch (rotation around the y-axis)
+ * 
+ * @param angle - The pitch angle in radians
  * @returns A 3×3 rotation matrix for pitch
  */
-export function Mpitch(yaw: number): Matrix {
-    var cy = Math.cos(yaw);
-    var sy = Math.sin(yaw);
-    var yawM = [
-        [cy, 0, sy],
+export function pitch(angle: number): Matrix {
+    var c = Math.cos(angle);
+    var s = Math.sin(angle);
+    return [
+        [c, 0, s],
         [0, 1, 0],
-        [-sy, 0, cy],
+        [-s, 0, c],
     ];
-    return yawM;
 };
+
+/**
+ * @deprecated Use {@link yaw} instead. Mroll will be removed in a future version.
+ */
+export const Mroll = yaw;
+
+/**
+ * @deprecated Use {@link roll} instead. Myaw will be removed in a future version.
+ */
+export const Myaw = roll;
+
+/**
+ * @deprecated Use {@link pitch} instead. Mpitch will be removed in a future version.
+ */
+export const Mpitch = pitch;
