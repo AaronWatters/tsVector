@@ -8,6 +8,44 @@ https://github.com/AaronWatters/qd_vector
 
 It is a bit like a "hello world" typescript library implementation.
 
+## Using this library in another project
+
+You can add `tsVector` to any JavaScript or TypeScript project directly from
+GitHub without publishing it to the npm registry.
+
+### Install from GitHub
+
+```bash
+npm install github:AaronWatters/tsVector
+```
+
+npm will fetch the repository and add it to your `package.json` dependencies.
+The package name used for imports is `tsvector` (as declared in the library's
+`package.json`), while `github:AaronWatters/tsVector` is the GitHub repository
+path used only for installation:
+
+```json
+"dependencies": {
+  "tsvector": "github:AaronWatters/tsVector"
+}
+```
+
+### Import the library
+
+After installation, import using the package name `tsvector`:
+
+**TypeScript / ES modules**
+
+```typescript
+import { /* functions you need */ } from "tsvector";
+```
+
+**CommonJS**
+
+```javascript
+const tsVector = require("tsvector");
+```
+
 ## Development
 
 ### Install dependencies
