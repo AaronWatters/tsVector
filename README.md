@@ -1,6 +1,8 @@
 # tsVector
 Quick and dirty and minimalist vector and matrix operations in Typescript.  KISS.
 
+📖 **[API Documentation](https://aaronwatters.github.io/tsVector/)**
+
 This is an experiment in making Typescript based libraries using Vite, initially
 ported from
 
@@ -101,7 +103,7 @@ After generation, open `docs/index.html` in your browser to view the documentati
 - Type information and parameter descriptions
 - A tutorial page accessible from the navigation menu
 
-> **Note:** The `docs/` directory is typically listed in `.gitignore` and regenerated as needed. You can customize the documentation by editing `typedoc.json` and the tutorial content in `docs-assets/tutorial.html`.
+> **Note:** The `docs/` directory is listed in `.gitignore` and regenerated as needed. You can customize the documentation by editing `typedoc.json` and the tutorial content in `docs-assets/tutorial.html`. The documentation is also automatically built and published to [GitHub Pages](https://aaronwatters.github.io/tsVector/) on every push to `main`.
 
 ## GitHub Actions CI
 
@@ -115,6 +117,8 @@ The workflow has two jobs:
 | **End-to-End Tests** | Playwright | `npm run test:e2e` |
 
 The Playwright job also uploads its HTML report as a downloadable **artifact** (retained for 30 days) so you can inspect failures without re-running locally.
+
+A separate workflow at [`.github/workflows/docs.yml`](.github/workflows/docs.yml) automatically generates and publishes the API documentation to [GitHub Pages](https://aaronwatters.github.io/tsVector/) on every push to `main`.
 
 ### Enabling Actions on your fork
 
