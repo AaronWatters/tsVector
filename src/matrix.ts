@@ -83,10 +83,10 @@ export function MTranspose(M: Matrix): Matrix {
  * @param n - The size of the identity matrix
  * @returns An n×n identity matrix (1s on diagonal, 0s elsewhere)
  */
-export function eye(n: number): Matrix {
+export function eye(n: number, scalar=1): Matrix {
     let result = mZero(n, n);
     for (let i = 0; i < n; i++) {
-        result[i][i] = 1;
+        result[i][i] = scalar;
     }
     return result;
 }
