@@ -23,7 +23,8 @@
     "test": "vitest",
     "dev": "vite",
     "test:e2e": "vite build && npx playwright test",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "docs": "typedoc && cp docs-assets/tutorial.html docs/"
   },
   "keywords": [],
   "author": "",

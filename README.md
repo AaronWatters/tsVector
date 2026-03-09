@@ -83,6 +83,26 @@ Open `coverage/index.html` in your browser to explore the results.
 
 > **Note:** The `coverage/` directory is listed in `.gitignore` and will not be committed to the repository.
 
+### Generate API documentation
+
+Generate comprehensive API documentation using TypeDoc:
+
+```bash
+npm run docs
+```
+
+This command will:
+- Generate API documentation from your TypeScript source code
+- Create an HTML documentation site in the `docs/` directory
+- Include a tutorial page with getting started information
+
+After generation, open `docs/index.html` in your browser to view the documentation. The documentation includes:
+- Complete API reference for all exported functions and types
+- Type information and parameter descriptions
+- A tutorial page accessible from the navigation menu
+
+> **Note:** The `docs/` directory is typically listed in `.gitignore` and regenerated as needed. You can customize the documentation by editing `typedoc.json` and the tutorial content in `docs-assets/tutorial.html`.
+
 ## GitHub Actions CI
 
 This repository includes a CI workflow at [`.github/workflows/ci.yml`](.github/workflows/ci.yml) that automatically runs the test suite on every push and pull request.
