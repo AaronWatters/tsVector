@@ -12,7 +12,8 @@
   },
   "categorizeByGroup": true,
   "navigationLinks": {
-    "Tutorial": "/tsVector/tutorial.html"
+    "Tutorial": "/tsVector/tutorial.html",
+    "GitHub Repository": "https://github.com/AaronWatters/tsVector"
   },
   "customCss": "./docs-assets/custom.css"
 }
