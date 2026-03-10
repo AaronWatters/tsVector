@@ -91,6 +91,17 @@ export function eye(n: number, scalar=1): Matrix {
     return result;
 }
 
+export function Mscale(scalar: number, M: Matrix): Matrix {
+    const [rows, cols] = Mshape(M);
+    let result = mZero(rows, cols);
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            result[i][j] = scalar * M[i][j];
+        }
+    }
+    return result;
+};
+
 /**
  * Computes the matrix-vector product M·v
  * 
