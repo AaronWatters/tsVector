@@ -2,11 +2,10 @@
 Quick and dirty and minimalist vector and matrix operations in Typescript.  KISS.
 
 📖 **[API Documentation](https://aaronwatters.github.io/tsVector/)**
+📖 **[Tutorial](https://aaronwatters.github.io/tsVector/tutorial.html)**
 
 This library supplies simple math operations useful for implementing
 interactive graphics in javascript (among other purposes).
-
-https://github.com/AaronWatters/qd_vector
 
 It is also a bit like a "hello world" typescript library implementation.
 
