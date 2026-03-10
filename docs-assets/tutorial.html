@@ -66,48 +66,165 @@
     <p>tsVector provides a minimalist approach to vector and matrix operations. This tutorial will guide you through the basic concepts and common use cases.</p>
     
     <h3>Basic Vector Operations</h3>
-    <p>Vectors are fundamental building blocks in tsVector. Here's how to work with them:</p>
-    <pre><code>import { vector } from "tsvector";
 
-// Create vectors
+<script type="module">
+import * as tsVector from './tsVector.js';
+
 const v1 = [1, 2, 3];
-const v2 = [4, 5, 6];
+const v2 = [4, -5, 6];
 
-// Perform operations
-// (Add your examples here)</code></pre>
+console.log('v1 + v2:', tsVector.vAdd(v1, v2));
+console.log('v1 - v2:', tsVector.vSub(v1, v2));
+console.log('min(v1, v2):', tsVector.vMin(v1, v2));
+console.log('max(v1, v2):', tsVector.vMax(v1, v2));
+console.log('2 * v1:', tsVector.vScale(2, v1));
+
+// element wise multiplication
+console.log('v1 * v2:', tsVector.vMul(v1, v2));
+
+// element wise division
+console.log('v1 / v2:', tsVector.vDiv(v1, v2));
+
+// dot product
+const vx = [1, 0, 0];
+const vy = [0, 1, 0];
+console.log('vx . v2:', tsVector.vDot(vx, v2)); 
+
+// cross product
+console.log('vx x vy:', tsVector.vCross(vx, vy));
+
+// length
+console.log('length of [3, 4, 0]:', tsVector.vLength([3, 4, 0]));
+
+// unit normalized vector
+console.log('unit vector of [3, 4, 0]:', tsVector.vNormalize([3, 4, 0]));
+</script>
+
+    <p>Vectors are fundamental building blocks in tsVector. Here's how to work with them:</p>
+    <pre><code>
+
+import * as tsVector from 'tsvector';
+
+const v1 = [1, 2, 3];
+const v2 = [4, -5, 6];
+
+console.log('v1 + v2:', tsVector.vAdd(v1, v2)); // Output: [5, -3, 9]
+console.log('v1 - v2:', tsVector.vSub(v1, v2)); // Output: [-3, 7, -3]
+console.log('min(v1, v2):', tsVector.vMin(v1, v2)); // Output: [1, -5, 3]
+console.log('max(v1, v2):', tsVector.vMax(v1, v2)); // Output: [4, 2, 6]
+console.log('2 * v1:', tsVector.vScale(2, v1)); // Output: [2, 4, 6]
+
+// element wise multiplication
+console.log('v1 * v2:', tsVector.vMul(v1, v2)); // Output: [4, -10, 18]
+
+// element wise division
+console.log('v1 / v2:', tsVector.vDiv(v1, v2)); // Output: [0.25, -0.4, 0.5]
+
+// dot product
+const vx = [1, 0, 0];
+const vy = [0, 1, 0];
+console.log('vx . v2:', tsVector.vDot(vx, v2)); // Output: 4
+
+// cross product
+console.log('vx x vy:', tsVector.vCross(vx, vy)); // Output: [0, 0, 1]
+
+// length
+console.log('length of [3, 4, 0]:', tsVector.vLength([3, 4, 0])); // Output: 5
+
+// unit normalized vector
+console.log('unit vector of [3, 4, 0]:', tsVector.vNormalize([3, 4, 0])); 
+// Output: [0.6, 0.8, 0]
+</code></pre>
     
     <h3>Working with Matrices</h3>
-    <p>Matrices in tsVector follow the same minimalist philosophy:</p>
-    <pre><code>import { matrix } from "tsvector";
 
-// Create a matrix
-const m1 = [[1, 2], [3, 4]];
+<script type="module">
+import * as tsVector from './tsVector.js';
 
-// Perform matrix operations
-// (Add your examples here)</code></pre>
-    
-    <h2>Advanced Topics</h2>
-    
-    <h3>Performance Considerations</h3>
-    <p>When working with large datasets, consider the following best practices:</p>
-    <ul>
-        <li>Keep operations simple and composable</li>
-        <li>Avoid unnecessary allocations</li>
-        <li>Use built-in operations when possible</li>
-    </ul>
-    
-    <h3>Integration with Other Libraries</h3>
-    <p>tsVector is designed to be lightweight and interoperable with other TypeScript/JavaScript mathematics libraries.</p>
+// 3x3 identity matrix
+const I3 = tsVector.eye(3);
+console.log('Identity matrix:', I3);
+// Output: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+
+// 3x3 rotation matrix for 90 degrees around Z axis
+const angle = Math.PI / 2;
+const Rz = tsVector.yaw(angle);
+console.log('Rotation matrix (90 degrees around Z):', Rz);
+// Output: [[0, -1, 0], [1, 0, 0], [0, 0, 1]]
+
+// 3x3 rotation matrix for 90 degrees around X axis
+const Rx = tsVector.roll(angle);
+console.log('Rotation matrix (90 degrees around X):', Rx);
+// Output: [[1, 0, 0], [0, 0, 1], [0, -1, 0]]
+
+const v = [6, -7, 8]
+// Rotate v by 90 degrees around Z axis
+const v_rotated_z = tsVector.MvProduct(Rz, v);
+console.log('v rotated by 90 degrees around Z:', v_rotated_z);
+// Output: [7, 6, 8]
+
+// first rotate 90 degrees around Z, then 90 degrees around X
+const R = tsVector.MMProduct(Rx, Rz);
+console.log('Combined rotation matrix (Rz followed by Rx):', R);
+// Output: [[0, -1, 0], [0, 0, 1], [-1, 0, 0]]
+
+// Rotate v by the combined rotation
+const v_rotated_combined = tsVector.MvProduct(R, v);
+console.log('v rotated by combined rotation:', v_rotated_combined);
+// Output: [7, 8, -6]
+
+// The inverse rotation.
+const R_inv = tsVector.MInverse(R);
+console.log('Inverse of combined rotation matrix:', R_inv);
+// Output: [[0, 0, -1], [-1, 0, 0], [0, 1, 0]]
+</script>
+    <p>Matrices are often used to transform vectors.</p>
+    <pre><code>
+import * as tsVector from 'tsvector';
+
+// 3x3 identity matrix
+const I3 = tsVector.eye(3);
+console.log('Identity matrix:', I3);
+// Output: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+
+// 3x3 rotation matrix for 90 degrees around Z axis
+const angle = Math.PI / 2;
+const Rz = tsVector.yaw(angle);
+console.log('Rotation matrix (90 degrees around Z):', Rz);
+// Output: [[0, -1, 0], [1, 0, 0], [0, 0, 1]]
+
+// 3x3 rotation matrix for 90 degrees around X axis
+const Rx = tsVector.roll(angle);
+console.log('Rotation matrix (90 degrees around X):', Rx);
+// Output: [[1, 0, 0], [0, 0, 1], [0, -1, 0]]
+
+const v = [6, -7, 8]
+// Rotate v by 90 degrees around Z axis
+const v_rotated_z = tsVector.MvProduct(Rz, v);
+console.log('v rotated by 90 degrees around Z:', v_rotated_z);
+// Output: [7, 6, 8]
+
+// first rotate 90 degrees around Z, then 90 degrees around X
+const R = tsVector.MMProduct(Rx, Rz);
+console.log('Combined rotation matrix (Rz followed by Rx):', R);
+// Output: [[0, -1, 0], [0, 0, 1], [-1, 0, 0]]
+
+// Rotate v by the combined rotation
+const v_rotated_combined = tsVector.MvProduct(R, v);
+console.log('v rotated by combined rotation:', v_rotated_combined);
+// Output: [7, 8, -6]
+
+// The inverse rotation.
+const R_inv = tsVector.MInverse(R);
+console.log('Inverse of combined rotation matrix:', R_inv);
+// Output: [[0, 0, -1], [-1, 0, 0], [0, 1, 0]]
+</code></pre>
     
     <h2>Next Steps</h2>
     <ul>
         <li>Explore the <a href="index.html">API documentation</a> for detailed function references</li>
         <li>Check out the source code examples in the test directory</li>
-        <li>Contribute to the project on GitHub</li>
     </ul>
     
-    <div class="note">
-        <strong>Note:</strong> This is a placeholder tutorial. Please update with actual content specific to your library's features and use cases.
-    </div>
 </body>
 </html>
