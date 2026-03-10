@@ -12,7 +12,7 @@
   },
   "categorizeByGroup": true,
   "navigationLinks": {
-    "Tutorial": "tutorial.html"
+    "Tutorial": "/tsVector/tutorial.html"
   },
   "customCss": "./docs-assets/custom.css"
 }
