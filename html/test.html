@@ -9,14 +9,11 @@
 <body>
 <h1>tsVector Library Demo</h1>
 
-<p>This is a simple demo of the tsVector library.</p>
-
-<p>The canvas below shows a cube with vertices transformed by rotation and scaling.</p>
-
-<div id="output">Canvas will go here.</div>
-
 <p>Please look at the console.</p>
-<script type="module" src="cube.js">
+<script type="module">
+  import { add, subtract } from '../dist/tsVector.js';
+  console.log('Add(2, 3):', add(2, 3));
+  console.log('Subtract(5, 3):', subtract(5, 3));
 </script>
 </body>
 </html>
