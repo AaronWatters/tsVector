@@ -3,12 +3,12 @@ Quick and dirty and minimalist vector and matrix operations in Typescript.  KISS
 
 📖 **[API Documentation](https://aaronwatters.github.io/tsVector/)**
 
-This is an experiment in making Typescript based libraries using Vite, initially
-ported from
+This library supplies simple math operations useful for implementing
+interactive graphics in javascript (among other purposes).
 
 https://github.com/AaronWatters/qd_vector
 
-It is a bit like a "hello world" typescript library implementation.
+It is also a bit like a "hello world" typescript library implementation.
 
 ## Using this library in another project
 
