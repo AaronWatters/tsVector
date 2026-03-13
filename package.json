@@ -1,5 +1,5 @@
 {
-  "name": "tsvector",
+  "name": "@awatters_flatiron/tsvector",
   "type": "module",
   "version": "1.0.0",
   "description": "Quick and dirty and minimalist vector and matrix operations in Typescript.  KISS.",
@@ -15,6 +15,7 @@
       }
     }
   },
+  "files": [ "dist" ],
   "main": "dist/tsVector.js",
   "module": "dist/tsVector.mjs",
   "types": "./dist/index.d.ts",
