@@ -9,6 +9,11 @@ interactive graphics in javascript (among other purposes).
 
 It is also a bit like a "hello world" typescript library implementation.
 
+![CI](https://github.com/AaronWatters/tsVector/actions/workflows/ci.yml/badge.svg)
+![bundle size](https://img.shields.io/bundlephobia/minzip/tsvector)
+![License](https://img.shields.io/badge/license-BSD%202--Clause-blue)
+![GitHub stars](https://img.shields.io/github/stars/AaronWatters/tsVector.svg)
+
 ## Using this library in another project
 
 You can add `tsVector` to any JavaScript or TypeScript project directly from
