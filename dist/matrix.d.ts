@@ -41,7 +41,8 @@ export declare function MTranspose(M: Matrix): Matrix;
  * @param n - The size of the identity matrix
  * @returns An n×n identity matrix (1s on diagonal, 0s elsewhere)
  */
-export declare function eye(n: number): Matrix;
+export declare function eye(n: number, scalar?: number): Matrix;
+export declare function Mscale(scalar: number, M: Matrix): Matrix;
 /**
  * Computes the matrix-vector product M·v
  *

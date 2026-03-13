@@ -99,11 +99,11 @@ function z(t) {
       e[o][l] = t[l][o];
   return e;
 }
-function w(t) {
-  let r = h(t, t);
-  for (let n = 0; n < t; n++)
-    r[n][n] = 1;
-  return r;
+function w(t, r = 1) {
+  let n = h(t, t);
+  for (let e = 0; e < t; e++)
+    n[e][e] = r;
+  return n;
 }
 function j(t, r) {
   let n = f(t.length);
