@@ -10,31 +10,29 @@ interactive graphics in javascript (among other purposes).
 It is also a bit like a "hello world" typescript library implementation.
 
 ![CI](https://github.com/AaronWatters/tsVector/actions/workflows/ci.yml/badge.svg)
-![bundle size](https://img.shields.io/bundlephobia/minzip/tsvector)
+![npm version](https://img.shields.io/npm/v/@awatters_flatiron/tsvector)
+![npm downloads](https://img.shields.io/npm/dm/@awatters_flatiron/tsvector)
+![bundle size](https://img.shields.io/bundlephobia/minzip/@awatters_flatiron/tsvector)
 ![License](https://img.shields.io/badge/license-BSD%202--Clause-blue)
 ![GitHub stars](https://img.shields.io/github/stars/AaronWatters/tsVector.svg)
 
 ## Using this library in another project
 
-You can add `tsVector` to any JavaScript or TypeScript project directly from
-GitHub without publishing it to the npm registry.
+You can add the latest `tsVector` to any JavaScript or TypeScript project from npm or github
 
-### Install from GitHub
+To install from npm:
+
+```bash
+npm install @awatters_flatiron/tsvector
+```
+
+To install from github:
 
 ```bash
 npm install github:AaronWatters/tsVector
 ```
 
 npm will fetch the repository and add it to your `package.json` dependencies.
-The package name used for imports is `tsvector` (as declared in the library's
-`package.json`), while `github:AaronWatters/tsVector` is the GitHub repository
-path used only for installation:
-
-```json
-"dependencies": {
-  "tsvector": "github:AaronWatters/tsVector"
-}
-```
 
 ### Import the library
 
