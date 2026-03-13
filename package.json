@@ -1,7 +1,7 @@
 {
   "name": "@awatters_flatiron/tsvector",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Quick and dirty and minimalist vector and matrix operations in Typescript.  KISS.",
   "exports": {
     ".": {
@@ -15,7 +15,9 @@
       }
     }
   },
-  "files": [ "dist" ],
+  "files": [
+    "dist"
+  ],
   "main": "dist/tsVector.js",
   "module": "dist/tsVector.mjs",
   "types": "./dist/index.d.ts",
